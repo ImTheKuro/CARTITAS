@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Envelope + Letter (Open/Close on Click)</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            overflow: hidden;
+            position: relative;
+        }
+        .hearts {
+            position: absolute;
+            top: -20px; /* Inicia fuera de la parte superior de la pantalla */
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(45deg);
+            animation: fall 5s linear infinite;
+            z-index: -2;
+        }
+        .hearts:before,
+        .hearts:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .hearts:before {
+            top: -10px;
+            left: 0;
+        }
+        .hearts:after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                transform: translateX(-50%) translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="text">
+                        <strong>Dear Person.</strong>
+                        <p>
+                            Me encanta cómo compartimos momentos a través de la pantalla. Cada conversación me hace querer conocerte más. Eres única y me gustaría descubrir quién eres en realidad. Espero que podamos seguir conectando y crear algo especial.
+                        </p>
+                        <img src="tulipan (2).png">
+                    </div>
+                </div>
+            </div>
+            <div class="heart"></div>
+        </div>
+    </div>
+    <script>
+        const envelope = document.querySelector('.envelope-wrapper');
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('flap');
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('hearts');
+            heart.style.left = Math.random() * 100 + 'vw'; // Posición horizontal aleatoria
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 5000); // Eliminar el corazón después de 5 segundos
+        }
+
+        setInterval(createHeart, 500); // Crear un corazón cada 500 milisegundos
+    </script>
+</body>
+</html>
